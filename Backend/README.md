@@ -57,3 +57,42 @@ The response body should be in JSON format and include the following fields:
     - `email` (string, required): User's email address (must be a valid email).
     - `password` (string, required): User's password (minimum 6 characters).
   - `token` (string): JWT Token.
+
+## `/users/profile` Endpoint
+
+### Description
+Retrieves the authenticated user's profile information.
+
+### HTTP Method
+`GET`
+
+### Headers
+- `Authorization`: Bearer token (or use cookie-based auth)
+
+### Response Body
+The response returns the authenticated user's information in JSON format.
+
+```json
+{
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  // ...other user properties...
+}
+```
+
+## `/users/logout` Endpoint
+
+### Description
+Logs out the user by clearing the authentication token cookie and blacklisting the token.
+
+### HTTP Method
+`GET`
+
+### Response Body
+A JSON message confirming the logout:
+```json
+{ "message": "Logged out" }
+```
