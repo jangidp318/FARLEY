@@ -96,3 +96,29 @@ A JSON message confirming the logout:
 ```json
 { "message": "Logged out" }
 ```
+
+## `/captains/register` Endpoint
+
+### Description
+Registers a new captain by creating an account with the provided details, including vehicle information.
+
+### HTTP Method
+`POST`
+
+### Request Body
+The request body should be in JSON format and include the following fields:
+  - `fullname` (object):
+    - `firstname` (string, required): Captain's first name (minimum 3 characters).
+    - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+  - `email` (string, required): Captain's email address.
+  - `password` (string, required): Captain's password (minimum 6 characters).
+  - `vehicle` (object):
+    - `color` (string, required): Vehicle color (minimum 3 characters).
+    - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+    - `capacity` (number, required): Vehicle capacity (minimum 1).
+    - `vehicleType` (string, required): One of 'car', 'motorcyle', or 'auto'.
+
+### Response Body
+The response returns a JSON object containing:
+  - `token` (string): JWT token for authentication.
+  - `captain` (object): The newly created captain's details.
