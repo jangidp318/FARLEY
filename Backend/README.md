@@ -122,3 +122,59 @@ The request body should be in JSON format and include the following fields:
 The response returns a JSON object containing:
   - `token` (string): JWT token for authentication.
   - `captain` (object): The newly created captain's details.
+
+## `/captains/login` Endpoint
+
+### Description
+Authenticates a captain using their email and password, returning a JWT token upon successful login.
+
+### HTTP Method
+`POST`
+
+### Request Body
+The request body should be in JSON format and include:
+- `email` (string, required): Captain's email address.
+- `password` (string, required): Captain's password.
+
+### Response Body
+A JSON object containing:
+- `token` (string): JWT Token.
+- `captain` (object): The authenticated captain's details.
+
+## `/captains/profile` Endpoint
+
+### Description
+Retrieves the authenticated captain's profile information.
+
+### HTTP Method
+`GET`
+
+### Headers
+- `Authorization`: Bearer token (or use cookie-based auth)
+
+### Response Body
+A JSON object with the captain's details.
+  - `fullname` (object):
+    - `firstname` (string, required): Captain's first name (minimum 3 characters).
+    - `lastname` (string, optional): Captain's last name (minimum 3 characters).
+  - `email` (string, required): Captain's email address.
+  - `password` (string, required): Captain's password (minimum 6 characters).
+  - `vehicle` (object):
+    - `color` (string, required): Vehicle color (minimum 3 characters).
+    - `plate` (string, required): Vehicle plate number (minimum 3 characters).
+    - `capacity` (number, required): Vehicle capacity (minimum 1).
+    - `vehicleType` (string, required): One of 'car', 'motorcyle', or 'auto'.
+
+## `/captains/logout` Endpoint
+
+### Description
+Logs out the captain by clearing the authentication token cookie and blacklisting the token.
+
+### HTTP Method
+`GET`
+
+### Response Body
+A JSON object confirming the logout:
+```json
+{ "message": "Logged out" }
+```
