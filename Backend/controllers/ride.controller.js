@@ -78,3 +78,43 @@ module.exports.confirmRide = async (req, res) => {
         return res.status(400).json({ message: error.message });
     }
 }
+
+module.exports.startRide = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { rideId, otp } = req.body;
+
+    try {
+
+        const ride = await rideServices.startRide({ rideId, otp });
+        res.status(200).json(ride);
+
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+}
+
+module.exports.endRide = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { rideId, captain } = req.body;
+
+    try {
+
+        const ride = await rideServices.endRide({ rideId, captain });
+        
+        sendMessageToSocketId(ride.user.socketId, {
+            event: 'ride-ended',
+            data: ride
+        })
+        
+        res.status(200).json(ride);
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+}

@@ -24,7 +24,22 @@ router.get('/confirm',
     authMiddleware.authCaptain,
     body('rideId').isMongoId().withMessage('Invalid ride id'),
     body('captain').isObject().withMessage('Missing Captain'),
-    rideController.confirmRide,
+    authMiddleware.authCaptain,
+    rideController.confirmRide
+)
+
+router.post('/start-ride',
+    body('rideId').isMongoId().withMessage('Invalid ride id'),
+    body('otp').isString().isLength({ min: 6, max: 6 }).withMessage('Invalid OTP'),
+    authMiddleware.authCaptain,
+    rideController.startRide
+)
+
+router.post('/end-ride',
+    authMiddleware.authCaptain,
+    body('rideId').isMongoId().withMessage('Invalid ride id'),
+    body('captain').isObject().withMessage('Missing Captain'),
+    rideController.endRide
 )
 
 

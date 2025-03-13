@@ -457,3 +457,146 @@ The response body should be in JSON format and include the following fields:
   }
 }
 ```
+
+
+
+## `/rides/start-ride` Endpoint
+
+### Description
+Starts a ride by verifying the provided OTP and updating the ride status to 'ongoing'.
+
+### HTTP Method
+`POST`
+
+### Request Body
+The request body should be in JSON format and include the following fields:
+- `rideId` (string, required): The ID of the ride to be started.
+- `otp` (string, required): The OTP for the ride (6 characters).
+
+### Response Body
+The response body should be in JSON format and include the following fields:
+- `ride` (object): The updated ride details, including the user and captain information.
+
+### Headers
+- `Authorization`: Bearer token (or use cookie-based auth)
+
+### Example Request
+```json
+{
+  "rideId": "60c72b2f9b1e8a001c8e4d5a",
+  "otp": "123456"
+}
+```
+
+### Example Response
+```json
+{
+  "ride": {
+    "_id": "60c72b2f9b1e8a001c8e4d5a",
+    "user": {
+      "_id": "60c72b2f9b1e8a001c8e4d5c",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com"
+    },
+    "captain": {
+      "_id": "60c72b2f9b1e8a001c8e4d5b",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    },
+    "pickup": "123 Main St",
+    "destination": "456 Elm St",
+    "fare": "150.00",
+    "status": "ongoing",
+    "otp": "123456"
+  }
+}
+```
+
+## `/rides/end-ride` Endpoint
+
+### Description
+Ends a ride by updating its status to 'completed'.
+
+### HTTP Method
+`POST`
+
+### Request Body
+The request body should be in JSON format and include the following fields:
+- `rideId` (string, required): The ID of the ride to be ended.
+- `captain` (object, required): The captain object containing the captain's details.
+
+### Response Body
+The response body should be in JSON format and include the following fields:
+- `ride` (object): The updated ride details, including the user and captain information.
+
+### Headers
+- `Authorization`: Bearer token (or use cookie-based auth)
+
+### Example Request
+```json
+{
+  "rideId": "60c72b2f9b1e8a001c8e4d5a",
+  "captain": {
+    "_id": "60c72b2f9b1e8a001c8e4d5b",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "XYZ123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### Example Response
+```json
+{
+  "ride": {
+    "_id": "60c72b2f9b1e8a001c8e4d5a",
+    "user": {
+      "_id": "60c72b2f9b1e8a001c8e4d5c",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com"
+    },
+    "captain": {
+      "_id": "60c72b2f9b1e8a001c8e4d5b",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    },
+    "pickup": "123 Main St",
+    "destination": "456 Elm St",
+    "fare": "150.00",
+    "status": "completed",
+    "otp": "123456"
+  }
+}
+```
