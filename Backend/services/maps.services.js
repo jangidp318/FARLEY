@@ -1,4 +1,6 @@
 const axios = require('axios');
+const { listIndexes } = require('../models/user.model');
+const captainModel = require('../models/captain.model')
 
 module.exports.getAddressCoordinate = async (address) => {
     try {
@@ -7,7 +9,8 @@ module.exports.getAddressCoordinate = async (address) => {
         console.log(response.data);
         if (response.data && response.data.results && response.data.results.length > 0) {
             const location = response.data.results[0].geometry.location;
-            return { lat: location.lat, long: location.lng };
+
+            return { ltd: location.lat, lng: location.lng };
         } else if (response.data.error_message) {
             throw new Error(response.data.error_message)
         }
@@ -40,3 +43,37 @@ module.exports.getDistanceAndTime = async (origin, destination) => {
         throw error;
     }
 };
+
+module.exports.getAutoCompleteSuggestions = async (input) => {
+    if (!input) {
+        throw new Error("Input is required");
+    }
+    try {
+        const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+        const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+        const response = await axios.get(url);
+        if (response.data.status === 'OK' && response.data.predictions && response.data.predictions.length > 0) {
+            return response.data.predictions;
+        }
+        throw new Error('No suggestions found');
+    } catch (error) {
+        console.error('Error in getAutoSuggestions:', error.message);
+        throw error;
+    }
+};
+
+module.exports.getCaptainInTheRadius = async (ltd, lng, radius) => {
+
+    // radius in KM
+
+    const captains = await captainModel.find({
+        location: {
+            $geoWithin: {
+                $centerSphere: [[ltd, lng], radius / 6371]
+            }
+        }
+    })
+
+    return captains
+
+}
