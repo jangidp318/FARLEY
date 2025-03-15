@@ -1,2 +1,63 @@
 .env
 node_modules
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log
+yarn.lock
+
+# Logs
+*.log
+*.log.*
+logs
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# React Native Build folders
+android/app/build/
+android/build/
+ios/Pods/
+ios/build/
+ios/.xcworkspace/
+ios/*.xcodeproj/
+ios/DerivedData/
+
+# Metro Bundler Cache
+.expo/
+.expo-shared/
+babel-cache/
+metro-cache/
+
+# Temporary files
+tmp/
+temp/
+*.swp
+*.swo
+*.swn
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
+
+# Miscellaneous
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+*.keystore
+*.p8
+*.jks
+*.p12
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+coverage/
